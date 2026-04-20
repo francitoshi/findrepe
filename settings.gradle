@@ -1,0 +1,2 @@
+rootProject.name = 'findrepe'
+include('app')

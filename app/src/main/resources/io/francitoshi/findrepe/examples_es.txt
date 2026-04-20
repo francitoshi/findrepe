@@ -1,0 +1,10 @@
+ejemplos de uso de findrepe:
+
+ findrepe backup
+ findrepe -d backup
+ findrepe -d --min-size=1m c:\\backup e:\\img
+ findrepe -nd c:\\backup e:\\img
+ findrepe -vn /opt/ /backup/tools
+ findrepe -vvn /opt/ --exclude=/opt/nb6.7%FILE_PATH_SEPARATOR%/opt/nb6.8
+ findrepe --byimage -znd photos
+
