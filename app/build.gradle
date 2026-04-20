@@ -65,10 +65,10 @@ jar
     archiveFileName = "findrepe-${version}.jar"
     manifest
     {
-        attributes 'Main-Class': 'com.softenido.findrepe.Main'
+        attributes 'Main-Class': 'io.francitoshi.findrepe.Main'
         attributes 'Implementation-Title': project.name
         attributes 'Implementation-Version': project.version
-        attributes 'Implementation-Vendor': 'flikxxi@gmail.com'
+        attributes 'Implementation-Vendor': 'francitoshi@gmail.com'
     }
 }
 
@@ -110,7 +110,7 @@ def jpackageBaseArgs =
     '--name',        'findrepe',
     '--app-version', project.version,
     '--main-jar',    "findrepe-${project.version}.jar",
-    '--main-class',  'com.softenido.findrepe.Main',
+    '--main-class',  'io.francitoshi.findrepe.Main',
     '--description', 'an app to find duplicate files',
     '--vendor',      'francitoshi',
 ]

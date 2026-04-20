@@ -25,6 +25,7 @@ import io.francitoshi.findrepe.showgroup.ImageShowGroup;
 import io.francitoshi.findrepe.showgroup.ShowGroup;
 import io.nut.headless.io.NameFileFilter;
 import io.nut.base.io.FileUtils;
+import io.nut.base.jar.Jars;
 import io.nut.base.logging.VerboseHandler;
 import io.nut.base.options.ArrayStringOption;
 import io.nut.base.options.BooleanOption;
@@ -35,7 +36,7 @@ import io.nut.base.options.NumberOption;
 import io.nut.base.options.OptionParser;
 import io.nut.base.options.SizeOption;
 import io.nut.base.resources.I18n;
-import io.nut.base.resources.ResourceBundles;
+import io.nut.base.time.JavaTime;
 import io.nut.base.util.Concats;
 import io.nut.base.util.SizeUnits;
 import io.nut.base.util.Utils;
@@ -47,8 +48,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -57,9 +56,10 @@ import java.util.logging.SimpleFormatter;
 
 public class Main
 {
-    private static final String FINDREPE = "findrepe";
+    static final String FINDREPE = "findrepe";
     static final String COPYRIGHT = "Copyright (C) 2009-2026 francitoshi@gmail.com";
-    static final String VER = Utils.firstNonNull(Main.class.getPackage().getImplementationVersion(), "dev");
+    static final String VER = Utils.firstNonNull(Main.class.getPackage().getImplementationVersion(), "[dev]");
+    static final String VERSION = FINDREPE + " v" + VER;
     static final String LICENSE_TXT;
     static final String HELP_TXT;
     static final String EXAMPLES_TXT;
@@ -72,7 +72,7 @@ public class Main
         LICENSE_TXT = i18n.resolveResource("license", "").replace("$COPYRIGHT$", COPYRIGHT);
         EXAMPLES_TXT = i18n.resolveResource("examples", "");
     }
-
+     
     /**
      * @param args the command line arguments
      * @throws java.lang.InterruptedException
@@ -172,14 +172,14 @@ public class Main
             System.out.println(HELP_TXT);
             return;
         }
+        if (version.isUsed())
+        {
+            System.out.println(VERSION);
+            return;
+        }
         if (license.isUsed())
         {
             System.out.println(LICENSE_TXT);
-            return;
-        }
-        if (version.isUsed())
-        {
-//666            System.out.println(VERSION_TXT);
             return;
         }
         if (examples.isUsed())

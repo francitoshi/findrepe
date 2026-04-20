@@ -1,14 +1,8 @@
-findrepe busca archivos repetidos en la ruta especificada, basándose en su 
-contenido (no en su nombre). Estos archivos se buscan comparando sus tamaños y 
-firmas SHA256.
+findrepe - Busca y realiza acciones sobre archivos duplicados
 
-findrepe se distribuye SIN NINGUNA GARANTÍA. Este es software libre, y
-puedes redistribuirlo bajo ciertas condiciones. Consulta la Licencia
-Pública General de GNU versión 3 para más detalles.
+USO: findrepe [OPCIONES] [DIRECTORIOS]
 
-uso: findrepe [opciones] [directorios]
-
-Opciones:
+OPCIONES:
  -v, --verbose               aumentar el nivel de detalle
  -V, --verbose-logger        formatear mensajes como un logger
  -L, --license               mostrar la licencia del software
@@ -41,7 +35,6 @@ Opciones:
      --exclude-idea          ignorar archivos .idea de Intellij IDEA
      --exclude-nb            ignorar archivos nb de NetBeans
      --exclude-eclipse       ignorar archivos de Eclipse
-
  -f, --focus=ruta            centrarse en archivos en la ruta
      --focus-dir=patrón      centrarse en directorios que coincidan con el patrón
      --focus-file=patrón     centrarse en archivos que coincidan con el patrón
@@ -62,7 +55,9 @@ Opciones:
      --version               mostrar el número de versión
      --examples              mostrar algunos ejemplos útiles
 (-h) --help                  mostrar esta ayuda (-h funciona sin otras opciones)
-unidades de tamaño:
- 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1t=1024g
- el carácter separador es %FILE_PATH_SEPARATOR%
-Reporte errores en <francitoshi@gmail.com>
+
+Unidades de tamaño: 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1t=1024g
+
+Carácter separador: %FILE_PATH_SEPARATOR%
+
+Reportar errores a: <francitoshi@gmail.com>

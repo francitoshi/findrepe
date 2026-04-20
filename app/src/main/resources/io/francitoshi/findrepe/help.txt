@@ -1,13 +1,8 @@
-findrepe searches the given path for repeated files by content (not name). Such
-files are found by comparing file sizes and SHA256 signatures.
+findrepe - finds and performs actions upon duplicate files
 
-findrepe comes with ABSOLUTELY NO WARRANTY. This is free software, and you
-are welcome to redistribute it under certain conditions. See the GNU
-General Public Licence version 3 for details.
+USAGE: findrepe [OPTIONS] [DIRECTORIES]
 
-usage: findrepe [options] [directories]
-
-Options:
+OPTIONS:
  -v, --verbose               increase verbosity
  -V, --verbose-logger        format messages as a logger
  -L, --license               display software license
@@ -63,9 +58,8 @@ Options:
      --examples              print some useful examples
 (-h) --help                  show this help (-h works with no other options)
 
-size units:
- 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1t=1024g
- separator character is %FILE_PATH_SEPARATOR%
+Size units: 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1t=1024g
 
-Report bugs to <francitoshi@gmail.com>
+Separator character is: %FILE_PATH_SEPARATOR%
 
+Report bugs to: <francitoshi@gmail.com>
