@@ -105,48 +105,58 @@ jobs:
             --resource-dir packaging
 
       - name: Create .sh universal installer
-	run: |
-	  mkdir -p build/installers/linux
-	  # Encode the JAR in base64
-	  JAR_B64=$(base64 -w 0 app/build/distribution/findrepe-${VERSION}.jar)
-	  cat > build/installers/linux/instalar-findrepe.sh << SCRIPT
-	  #!/bin/bash
-	  # ──────────────────────────────────────────────
-	  # findrepe ${VERSION} — Universal Linux Installer
-	  # Usage: bash instalar-findrepe.sh
-	  # ──────────────────────────────────────────────
-	  set -e
-	  INSTALL_DIR="\$HOME/.local/share/findrepe"
-	  BIN_DIR="\$HOME/.local/bin"
-	  JAR_NAME="findrepe-${VERSION}.jar"
-	  echo "📦 Installing findrepe ${VERSION}..."
-	  # Check Java
-	  if ! command -v java &> /dev/null; then
-	    echo "❌ Java not found. Please install Java 17 or later."
-	    echo "   Ubuntu/Debian: sudo apt install openjdk-17-jre"
-	    echo "   Fedora:        sudo dnf install java-17-openjdk"
-	    exit 1
-	  fi
-	  mkdir -p "\$INSTALL_DIR"
-	  mkdir -p "\$BIN_DIR"
-	  # Extract embedded JAR
-	  echo "📂 Extracting JAR..."
-	  echo "${JAR_B64}" | base64 -d > "\$INSTALL_DIR/\$JAR_NAME"
-	  # Create launcher
-	  cat > "\$BIN_DIR/findrepe" << 'LAUNCHER'
-	  #!/bin/bash
-	  exec java -jar "\$HOME/.local/share/findrepe/${JAR_NAME}"
-	  LAUNCHER
-		  chmod +x "\$BIN_DIR/findrepe"
-		  # Add ~/local/bin to PATH if missing
-		  if [[ ":\$PATH:" != *":\$BIN_DIR:"* ]]; then
-		    echo ""
-		    echo "⚠️  Add this line to your ~/.bashrc or ~/.zshrc:"
-		    echo "   export PATH=\"\$BIN_DIR:\$PATH\""
-		  fi
-		  echo "✅ findrepe ${VERSION} installed. Run: findrepe"
-		  SCRIPT
-		  chmod +x build/installers/linux/instalar-findrepe.sh
+          run: |
+            mkdir -p build/installers/linux
+
+            # Encode the JAR in base64
+            JAR_B64=$(base64 -w 0 app/build/distribution/findrepe-${VERSION}.jar)
+
+            cat > build/installers/linux/instalar-findrepe.sh << SCRIPT
+          #!/bin/bash
+          # ──────────────────────────────────────────────
+          # findrepe ${VERSION} — Universal Linux Installer
+          # Usage: bash instalar-findrepe.sh
+          # ──────────────────────────────────────────────
+          set -e
+
+          INSTALL_DIR="\$HOME/.local/share/findrepe"
+          BIN_DIR="\$HOME/.local/bin"
+          JAR_NAME="findrepe-${VERSION}.jar"
+
+          echo "📦 Installing findrepe ${VERSION}..."
+
+          # Check Java
+          if ! command -v java &> /dev/null; then
+            echo "❌ Java not found. Please install Java 17 or later."
+            echo "   Ubuntu/Debian: sudo apt install openjdk-17-jre"
+            echo "   Fedora:        sudo dnf install java-17-openjdk"
+            exit 1
+          fi
+
+          mkdir -p "\$INSTALL_DIR"
+          mkdir -p "\$BIN_DIR"
+
+          # Extract embedded JAR
+          echo "📂 Extracting JAR..."
+          echo "${JAR_B64}" | base64 -d > "\$INSTALL_DIR/\$JAR_NAME"
+
+          # Create launcher
+          cat > "\$BIN_DIR/findrepe" << 'LAUNCHER'
+          #!/bin/bash
+          exec java -jar "\$HOME/.local/share/findrepe/${JAR_NAME}"
+          LAUNCHER
+          chmod +x "\$BIN_DIR/findrepe"
+          # Add ~/local/bin to PATH if missing
+          if [[ ":\$PATH:" != *":\$BIN_DIR:"* ]]; then
+            echo ""
+            echo "⚠️  Add this line to your ~/.bashrc or ~/.zshrc:"
+            echo "   export PATH=\"\$BIN_DIR:\$PATH\""
+          fi
+          
+          echo "✅ findrepe ${VERSION} installed. Run: findrepe"
+          SCRIPT
+
+          chmod +x build/installers/linux/instalar-findrepe.sh
 
       - name: Build Snap package
         uses: snapcore/action-build@v1
