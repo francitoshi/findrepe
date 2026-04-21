@@ -20,6 +20,7 @@
  */
 package io.francitoshi.findrepe;
 
+import io.nut.base.collections.IterableQueue;
 import io.nut.base.io.FileUtils;
 import io.nut.base.util.Splitter;
 import io.nut.base.util.concurrent.hive.Bee;
@@ -28,7 +29,6 @@ import io.nut.headless.io.virtual.VirtualFile;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -196,7 +196,7 @@ public class FindRepeHive implements Runnable
         @Override
         protected void terminate()
         {
-            splitBee.shutdown();
+            splitBee.shutdown(true);
         }
         @Override
         protected void exception(Exception ex)
@@ -219,7 +219,7 @@ public class FindRepeHive implements Runnable
         @Override
         protected void terminate()
         {
-            bucketMapBee.shutdown();
+            bucketMapBee.shutdown(true);
         }
         @Override
         protected void exception(Exception ex)
@@ -253,7 +253,7 @@ public class FindRepeHive implements Runnable
         @Override
         protected void terminate()
         {
-            lowMemBee.shutdown();
+            lowMemBee.shutdown(true);
         }
         @Override
         protected void exception(Exception ex)
@@ -321,7 +321,7 @@ public class FindRepeHive implements Runnable
                 minFocusBee.send(hashes[i]);
                 hashes[i] = null;
             }
-            minFocusBee.shutdown();
+            minFocusBee.shutdown(true);
             lowMemBee.awaitTermination(Integer.MAX_VALUE);
         }
         catch (IOException | InterruptedException ex)
@@ -332,14 +332,12 @@ public class FindRepeHive implements Runnable
 
     public Iterable<File> getBugIterable()
     {
-        return new ArrayList<>(bugQueue);
-//        return IterableBuilder.build(bugQueue, fileEof);
+        return new IterableQueue(groupsQueue, filesEof);
     }
 
     public Iterable<VirtualFile[]> getGroupsIterable()
     {
-        return new ArrayList<>(groupsQueue);
-//        return IterableBuilder.build(groupsQueue, filesEof);
+        return new IterableQueue(groupsQueue, filesEof);
     }
 
     public void verbose(FindRepeHive from, Level level, String msg, Exception ex)

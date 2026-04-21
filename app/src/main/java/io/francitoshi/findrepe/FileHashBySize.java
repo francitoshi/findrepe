@@ -66,7 +66,7 @@ public class FileHashBySize
         
         this.dirNameRegEx = options.getDirNames();
         this.fileNameRegEx = options.getFileNames();
-        this.sizeMap = Bag.create(halfCmp);
+        this.sizeMap = Bag.synchronizedBag(Bag.create(halfCmp));
         
         this.hive.add(readableBee, filterDirFileBee);
     }
@@ -152,8 +152,7 @@ public class FileHashBySize
         @Override
         protected void terminate()
         {
-            filterDirFileBee.shutdown();
-            System.out.println("readableBeeCount="+readableBeeCount.get());
+            filterDirFileBee.shutdown(true);
         }
 
         @Override
@@ -181,8 +180,7 @@ public class FileHashBySize
         @Override
         protected void terminate()
         {
-            filterDirFileBee.shutdown();
-            System.out.println("filterDirFileBeeCount="+filterDirFileBeeCount.get());
+            filterDirFileBee.shutdown(true);
         }
         @Override
         protected void exception(Exception ex)
@@ -209,9 +207,7 @@ public class FileHashBySize
                 
         // now each bucket is
         VirtualFile[][] list = sizeMap.toArray(new VirtualFile[0][0]);
-        System.out.println("sizeBuckets="+list.length);
         return (list == null ? new VirtualFile[0][] : list);
     }
-    
     
 }

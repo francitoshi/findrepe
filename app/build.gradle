@@ -13,12 +13,8 @@ repositories
     maven { url 'https://jitpack.io' }
 }
 
-def nutVersion = '0.1.67'
+def nutVersion = '0.1.68'
 
-subprojects 
-{
-    apply plugin: 'java'
-}
 configurations.all 
 {
     resolutionStrategy 
@@ -134,7 +130,7 @@ task('linux-release-deb', type: Exec)
         '--resource-dir',   '../packaging'
 }
 
-task('linux-release-rpm', type: Exec) 
+task('linux-release-rpm', type: Exec)
 {
     dependsOn createDistribution
     group = 'release'
@@ -151,7 +147,7 @@ task('linux-release-rpm', type: Exec)
         '--resource-dir',   '../packaging'
 }
 
-task('linux-release') 
+task('linux-release')
 {
     dependsOn 'linux-release-deb', 'linux-release-rpm'
     group = 'release'
@@ -160,7 +156,7 @@ task('linux-release')
 
 // ── WINDOWS: Generates .exe and .msi ──────────────────────────────
 
-task('windows-release-exe', type: Exec) 
+task('windows-release-exe', type: Exec)
 {
     dependsOn createDistribution
     group = 'release'
@@ -179,7 +175,7 @@ task('windows-release-exe', type: Exec)
         '--win-console'
 }
 
-task('windows-release-msi', type: Exec) 
+task('windows-release-msi', type: Exec)
 {
     dependsOn 'windows-release-exe'
     group = 'release'
@@ -197,7 +193,7 @@ task('windows-release-msi', type: Exec)
         '--win-console'
 }
 
-task('windows-release') 
+task('windows-release')
 {
     dependsOn 'windows-release-exe', 'windows-release-msi'
     group = 'release'
@@ -206,7 +202,7 @@ task('windows-release')
 
 // ── MAC: generate .dmg y .pkg ──────────────────────────────────
 
-task('mac-release-dmg', type: Exec) 
+task('mac-release-dmg', type: Exec)
 {
     dependsOn createDistribution
     group = 'release'
@@ -222,7 +218,7 @@ task('mac-release-dmg', type: Exec)
         '--mac-package-name', 'findrepe'
 }
 
-task('mac-release-pkg', type: Exec) 
+task('mac-release-pkg', type: Exec)
 {
     dependsOn 'mac-release-dmg'
     group = 'release'
@@ -236,7 +232,7 @@ task('mac-release-pkg', type: Exec)
         '--dest',             destDir
 }
 
-task('mac-release') 
+task('mac-release')
 {
     dependsOn 'mac-release-dmg', 'mac-release-pkg'
     group = 'release'
